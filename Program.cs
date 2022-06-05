@@ -67,7 +67,8 @@ namespace Auto_Create_Projects_DotNet
                 System.Console.WriteLine("6 - Microsoft.EntityFrameworkCore.SqlServer ");
                 System.Console.WriteLine("7 - NLog");
                 System.Console.WriteLine("8 - NLog.Web.AspNetCore");
-                System.Console.WriteLine("9 - Dapper  ");
+                System.Console.WriteLine("9 - Dapper");
+                System.Console.WriteLine("10 - FluentValidation.AspNetCore");
                 System.Console.WriteLine("0 - Sair");
                 
                 System.Console.Write("\nInforme o pacote selecionado: ");
@@ -101,6 +102,9 @@ namespace Auto_Create_Projects_DotNet
                         break;
                     case 9: 
                         System.Console.WriteLine(Camadas.InstalarPacotes(versaoDotNet,"Dapper"));
+                        break;
+                    case 10: 
+                        System.Console.WriteLine(Camadas.InstalarPacotes(versaoDotNet,"FluentValidation.AspNetCore"));
                         break;
                     case 0: return;                    
                     default: throw new Exception("Opção inválida.");            
