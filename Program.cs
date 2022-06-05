@@ -9,6 +9,7 @@ namespace Auto_Create_Projects_DotNet
     {
         static void Main(string[] args)
         {
+            Console.WriteLine("Autor:  André Lessas");
             Console.WriteLine("-------------------Criador de projetos.-------------------");
 
             System.Console.Write("Informe o nome do projeto: ");
