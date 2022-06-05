@@ -1,7 +1,7 @@
 using System;
 using System.Diagnostics;
 
-namespace Template_Projetos_Padrao3Camadas.src
+namespace Auto_Create_Projects_DotNet.src
 {
     public static class Util
     {
@@ -11,11 +11,7 @@ namespace Template_Projetos_Padrao3Camadas.src
             {
                 case 5: return "net5.0";
                 case 6: return "net6.0";
-                default: 
-                {
-                    System.Console.WriteLine("Opção incorreta.");
-                    return "";
-                }
+                default: throw new Exception("Opção incorreta.");
             }
         }
         
