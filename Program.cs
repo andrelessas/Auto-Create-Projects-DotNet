@@ -51,8 +51,10 @@ namespace Auto_Create_Projects_DotNet
             InstalarPacotes(versaoDotNet,"CORE",diretorioCORE);
             InstalarPacotes(versaoDotNet,"DATA",diretorioDATA);
 
-            System.Console.WriteLine("Projeto criado com sucesso. \nPressione qualquer tecla para fechar a aplicação.");
-            Console.ReadKey();
+            Directory.SetCurrentDirectory(diretorioProjeto);
+            Util.ExecutaComandoCMD("code .");
+            // System.Console.WriteLine("Projeto criado com sucesso. \nPressione qualquer tecla para fechar a aplicação.");
+            // Console.ReadKey();
         }
         private static void InstalarPacotes(string versaoDotNet,string camada,string diretorio)
         {

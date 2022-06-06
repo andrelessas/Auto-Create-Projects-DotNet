@@ -29,7 +29,7 @@ namespace Auto_Create_Projects_DotNet.src
 
                     processo.StartInfo.RedirectStandardOutput = true;
                     processo.StartInfo.UseShellExecute = false;
-                    processo.StartInfo.CreateNoWindow = true;
+                    processo.StartInfo.CreateNoWindow = false;
 
                     processo.Start();
                     processo.WaitForExit();
