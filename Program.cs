@@ -65,13 +65,15 @@ namespace Auto_Create_Projects_DotNet
                 System.Console.WriteLine("1 - AutoMapper");
                 System.Console.WriteLine("2 - AutoMapper.Extensions.Microsoft.DependencyInjection");
                 System.Console.WriteLine("3 - FluentValidation ");
-                System.Console.WriteLine("4 - Microsoft.EntityFrameworkCore ");
-                System.Console.WriteLine("5 - Microsoft.EntityFrameworkCore.Design ");
-                System.Console.WriteLine("6 - Microsoft.EntityFrameworkCore.SqlServer ");
-                System.Console.WriteLine("7 - NLog");
-                System.Console.WriteLine("8 - NLog.Web.AspNetCore");
-                System.Console.WriteLine("9 - Dapper");
-                System.Console.WriteLine("10 - FluentValidation.AspNetCore");
+                System.Console.WriteLine("4 - FluentValidation.AspNetCore");
+                System.Console.WriteLine("5 - Microsoft.EntityFrameworkCore");
+                System.Console.WriteLine("6 - Microsoft.EntityFrameworkCore.Design");
+                System.Console.WriteLine("7 - Microsoft.EntityFrameworkCore.SqlServer");
+                System.Console.WriteLine("8 - Microsoft.EntityFrameworkCore.Relational");
+                System.Console.WriteLine("9 - Microsoft.EntityFrameworkCore.Tools");
+                System.Console.WriteLine("10 - NLog");
+                System.Console.WriteLine("11 - NLog.Web.AspNetCore");
+                System.Console.WriteLine("12 - Dapper");
                 System.Console.WriteLine("0 - Sair");
                 
                 System.Console.Write("\nInforme o pacote selecionado: ");
@@ -89,25 +91,31 @@ namespace Auto_Create_Projects_DotNet
                         System.Console.WriteLine(Camadas.InstalarPacotes(versaoDotNet,"FluentValidation"));
                         break;
                     case 4: 
-                        System.Console.WriteLine(Camadas.InstalarPacotes(versaoDotNet,"Microsoft.EntityFrameworkCore"));
+                        System.Console.WriteLine(Camadas.InstalarPacotes(versaoDotNet,"FluentValidation.AspNetCore"));
                         break;
                     case 5: 
-                        System.Console.WriteLine(Camadas.InstalarPacotes(versaoDotNet,"Microsoft.EntityFrameworkCore.Design"));
+                        System.Console.WriteLine(Camadas.InstalarPacotes(versaoDotNet,"Microsoft.EntityFrameworkCore"));
                         break;
                     case 6: 
-                        System.Console.WriteLine(Camadas.InstalarPacotes(versaoDotNet,"Microsoft.EntityFrameworkCore.SqlServer"));
+                        System.Console.WriteLine(Camadas.InstalarPacotes(versaoDotNet,"Microsoft.EntityFrameworkCore.Design"));
                         break;
                     case 7: 
-                        System.Console.WriteLine(Camadas.InstalarPacotes(versaoDotNet,"NLog"));
+                        System.Console.WriteLine(Camadas.InstalarPacotes(versaoDotNet,"Microsoft.EntityFrameworkCore.SqlServer"));
                         break;
                     case 8: 
-                        System.Console.WriteLine(Camadas.InstalarPacotes(versaoDotNet,"NLog.Web.AspNetCore"));
+                        System.Console.WriteLine(Camadas.InstalarPacotes(versaoDotNet,"Microsoft.EntityFrameworkCore.Relational"));
                         break;
                     case 9: 
-                        System.Console.WriteLine(Camadas.InstalarPacotes(versaoDotNet,"Dapper"));
+                        System.Console.WriteLine(Camadas.InstalarPacotes(versaoDotNet,"Microsoft.EntityFrameworkCore.Tools"));
                         break;
                     case 10: 
-                        System.Console.WriteLine(Camadas.InstalarPacotes(versaoDotNet,"FluentValidation.AspNetCore"));
+                        System.Console.WriteLine(Camadas.InstalarPacotes(versaoDotNet,"NLog"));
+                        break;
+                    case 11: 
+                        System.Console.WriteLine(Camadas.InstalarPacotes(versaoDotNet,"NLog.Web.AspNetCore"));
+                        break;
+                    case 12: 
+                        System.Console.WriteLine(Camadas.InstalarPacotes(versaoDotNet,"Dapper"));
                         break;
                     case 0: return;                    
                     default: throw new Exception("Opção inválida.");            
