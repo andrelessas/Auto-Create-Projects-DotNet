@@ -74,6 +74,7 @@ namespace Auto_Create_Projects_DotNet
                 System.Console.WriteLine("10 - NLog");
                 System.Console.WriteLine("11 - NLog.Web.AspNetCore");
                 System.Console.WriteLine("12 - Dapper");
+                System.Console.WriteLine("13 - Newtonsoft.Json");
                 System.Console.WriteLine("0 - Sair");
                 
                 System.Console.Write("\nInforme o pacote selecionado: ");
@@ -116,6 +117,9 @@ namespace Auto_Create_Projects_DotNet
                         break;
                     case 12: 
                         System.Console.WriteLine(Camadas.InstalarPacotes(versaoDotNet,"Dapper"));
+                        break;
+                    case 13: 
+                        System.Console.WriteLine(Camadas.InstalarPacotes(versaoDotNet,"Newtonsoft.Json"));
                         break;
                     case 0: return;                    
                     default: throw new Exception("Opção inválida.");            
