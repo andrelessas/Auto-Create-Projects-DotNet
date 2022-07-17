@@ -9,18 +9,14 @@ namespace Auto_Create_Projects_DotNet.src
 {
     public static class Camadas
     {
-        public static void CriarCamadas(EnumCamadas camadas,string nomeProjeto, string versaoDotNet)
+        public static string CriarCamadas(EnumCamadas camadas,string nomeProjeto, string versaoDotNet)
         {
             switch (camadas)
             {
-                case EnumCamadas.API: CriarCamadaWebAPI(nomeProjeto,versaoDotNet);
-                break;
-                case EnumCamadas.DOMAIN: CriarCamadaDomain(nomeProjeto,versaoDotNet);
-                break;
-                case EnumCamadas.CORE: CriarCamadaCore(nomeProjeto,versaoDotNet);
-                break;
-                case EnumCamadas.DATA: CriarCamadaData(nomeProjeto,versaoDotNet);
-                break;
+                case EnumCamadas.API: return CriarCamada(@$"dotnet new webapi -n {nomeProjeto}.API -f {versaoDotNet}");
+                case EnumCamadas.Business: return CriarCamada(@$"dotnet new classlib -n {nomeProjeto}.Business -f {versaoDotNet}");
+                case EnumCamadas.Data: return CriarCamada(@$"dotnet new classlib -n {nomeProjeto}.Data -f {versaoDotNet}");
+                case EnumCamadas.Tests: return CriarCamada(@$"dotnet new classlib -n {nomeProjeto}.Tests -f {versaoDotNet}");
                 default: throw new Exception("Opção inválida");
             }
         }
@@ -30,25 +26,32 @@ namespace Auto_Create_Projects_DotNet.src
             {
                 case EnumCamadas.API: ConfigurarCamadaAPI(diretorio);
                 break;
-                case EnumCamadas.DOMAIN: ConfigurarCamadaDOMAIN(diretorio);
-                break;
-                case EnumCamadas.CORE: ConfigurarCamadaCORE(diretorio);
-                break;
-                case EnumCamadas.DATA: ConfigurarCamadaDATA(diretorio);
-                break;
+                case EnumCamadas.Business: ConfigurarCamadaBusiness(diretorio);
+                break;                
+                case EnumCamadas.Data: ConfigurarCamadaData(diretorio);
+                break;            
                 default: throw new Exception("Opção inválida");
             }
         }
         public static string InstalarPacotes(string versaoDotNet, string nomePacote)    
         {
-            string comando = "";
-            
-            if (nomePacote.Contains("EntityFrameworkCore") && versaoDotNet.Contains("5.0"))
-                comando = @$"dotnet add package {nomePacote} --version 5.0.17";
-            else   
-                comando = @$"dotnet add package {nomePacote}";
-
-            return Util.ExecutaComandoCMD(comando);
+            return Util.ExecutaComandoCMD(@$"dotnet add package {nomePacote}");
+        }
+        public static void ConfigurarNLog(string origem,string destino)
+        {
+            if(!File.Exists(origem+"\\ArquivosUteis\\Nlog.config"))
+                {        
+                    System.Console.WriteLine(origem+"\\ArquivosUteis");            
+                    System.Console.WriteLine("\nArquivo NLog.config não encontrado.\nDeseja continuar?(s - Sim / n - Não)");
+                    if(Console.ReadLine() == "n") 
+                        return;
+                }
+            else
+                origem = origem+"\\ArquivosUteis";
+                
+            var localOrigem = Path.Combine(origem,"Nlog.config");
+            var localDestino = Path.Combine(destino,"Nlog.config");
+            File.Copy(localOrigem,localDestino,true);
         }
         private static void ConfigurarCamadaAPI(string diretorio)
         {
@@ -58,27 +61,28 @@ namespace Auto_Create_Projects_DotNet.src
             Directory.CreateDirectory(@$"{diretorio}\Middleware");
             LogCriacaoCamada(@$"{diretorio}\Middleware");
         }
-        private static void ConfigurarCamadaDOMAIN(string diretorio)
+        private static void ConfigurarCamadaBusiness(string diretorio)
         {
             Directory.CreateDirectory(@$"{diretorio}\Interfaces");
             LogCriacaoCamada(@$"{diretorio}\Interfaces");
             Directory.CreateDirectory(@$"{diretorio}\Services");
             LogCriacaoCamada(@$"{diretorio}\Services");
-            Directory.CreateDirectory(@$"{diretorio}\Entities");
-            LogCriacaoCamada(@$"{diretorio}\Entities");
+            Directory.CreateDirectory(@$"{diretorio}\Models");
+            LogCriacaoCamada(@$"{diretorio}\Models");
+            Directory.CreateDirectory(@$"{diretorio}\Models\Validations");
+            LogCriacaoCamada(@$"{diretorio}\Models\Validations");
             Directory.CreateDirectory(@$"{diretorio}\Pagination");
             LogCriacaoCamada(@$"{diretorio}\Pagination");
+            Directory.CreateDirectory(@$"{diretorio}\Notificacoes");
+            LogCriacaoCamada(@$"{diretorio}\Notificacoes");
             Directory.CreateDirectory(@$"{diretorio}\DTOs");
             LogCriacaoCamada(@$"{diretorio}\DTOs");
-            Directory.CreateDirectory(@$"{diretorio}\Token");
-            LogCriacaoCamada(@$"{diretorio}\Token");
-        }
-        private static void ConfigurarCamadaCORE(string diretorio)
-        {
             Directory.CreateDirectory(@$"{diretorio}\Manager");
             LogCriacaoCamada(@$"{diretorio}\Manager");
-        }
-        private static void ConfigurarCamadaDATA(string diretorio)
+            Directory.CreateDirectory(@$"{diretorio}\Token");
+            LogCriacaoCamada(@$"{diretorio}\Token");
+        }        
+        private static void ConfigurarCamadaData(string diretorio)
         {
             Directory.CreateDirectory(@$"{diretorio}\Repository");
             LogCriacaoCamada(@$"{diretorio}\Repository");
@@ -86,32 +90,18 @@ namespace Auto_Create_Projects_DotNet.src
             LogCriacaoCamada(@$"{diretorio}\Context");
             Directory.CreateDirectory(@$"{diretorio}\Mappings");
             LogCriacaoCamada(@$"{diretorio}\Mappings");
+            Directory.CreateDirectory(@$"{diretorio}\Migrations");
+            LogCriacaoCamada(@$"{diretorio}\Migrations");
         }
         private static void LogCriacaoCamada(string diretorio)
         {
             if (Directory.Exists(@$"{diretorio}"))
                 System.Console.WriteLine(@$"{diretorio} criado");
         }
-        private static void CriarCamadaData(string nomeProjeto, string versaoDotNet)
+        private static string CriarCamada(string comando)
         {
-            string comando = @$"dotnet new classlib -n {nomeProjeto}.DATA -f {versaoDotNet}";
-            Log(Util.ExecutaComandoCMD(comando));
-        }  
-        private static void CriarCamadaCore(string nomeProjeto, string versaoDotNet)
-        {
-            string comando = @$"dotnet new classlib -n {nomeProjeto}.CORE -f {versaoDotNet}";
-            Log(Util.ExecutaComandoCMD(comando));
-        } 
-        private static void CriarCamadaDomain(string nomeProjeto, string versaoDotNet)
-        {
-            string comando = @$"dotnet new classlib -n {nomeProjeto}.DOMAIN -f {versaoDotNet}";
-            Log(Util.ExecutaComandoCMD(comando));
-        } 
-        private static void CriarCamadaWebAPI(string nomeProjeto,string versaoDotNet)
-        {
-            string comando = @$"dotnet new webapi -n {nomeProjeto}.API -f {versaoDotNet}";
-            Log(Util.ExecutaComandoCMD(comando));
-        }   
+            return Util.ExecutaComandoCMD(comando);
+        }          
         private static void Log(string mensagem)
         {
             System.Console.WriteLine(mensagem);

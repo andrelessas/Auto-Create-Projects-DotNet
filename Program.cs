@@ -17,47 +17,45 @@ namespace Auto_Create_Projects_DotNet
 
             Console.Write("Informe o diretório do projeto: ");
             string diretorio = Console.ReadLine();
-
-            System.Console.WriteLine("Informe a versão do DotNet:");
-            System.Console.WriteLine("5 - DotNet 5");
-            System.Console.WriteLine("6 - DotNet 6");
-            string versaoDotNet = Util.ObterVersaoDotNet(Convert.ToInt32(Console.ReadLine()));
-
+            
+            string versaoDotNet = "net6.0"; 
             string diretorioProjeto = diretorio+"\\"+nomeProjeto;
 
+            string diretorioProjetoAtual = Directory.GetCurrentDirectory();
+
+            diretorioProjetoAtual = diretorioProjetoAtual+"\\src"; 
+            
             if(!Directory.Exists(diretorioProjeto))
                 Directory.CreateDirectory(diretorioProjeto);
             
             Directory.SetCurrentDirectory(diretorioProjeto);
             
-            Camadas.CriarCamadas(EnumCamadas.API,nomeProjeto,versaoDotNet);
-            Camadas.CriarCamadas(EnumCamadas.CORE,nomeProjeto,versaoDotNet);                        
-            Camadas.CriarCamadas(EnumCamadas.DOMAIN,nomeProjeto,versaoDotNet);
-            Camadas.CriarCamadas(EnumCamadas.DATA,nomeProjeto,versaoDotNet);
+            System.Console.WriteLine(Camadas.CriarCamadas(EnumCamadas.API,nomeProjeto,versaoDotNet));
+            System.Console.WriteLine(Camadas.CriarCamadas(EnumCamadas.Business,nomeProjeto,versaoDotNet));
+            System.Console.WriteLine(Camadas.CriarCamadas(EnumCamadas.Data,nomeProjeto,versaoDotNet));
+            System.Console.WriteLine(Camadas.CriarCamadas(EnumCamadas.Tests,nomeProjeto,versaoDotNet));
 
             var diretorioAPI = @$"{diretorioProjeto}\{nomeProjeto}.API";
-            var diretorioDOMAIN = @$"{diretorioProjeto}\{nomeProjeto}.DOMAIN";
-            var diretorioDATA = @$"{diretorioProjeto}\{nomeProjeto}.DATA";
-            var diretorioCORE = @$"{diretorioProjeto}\{nomeProjeto}.CORE";
+            var diretorioBusiness = @$"{diretorioProjeto}\{nomeProjeto}.Business";
+            var diretorioDATA = @$"{diretorioProjeto}\{nomeProjeto}.Data";
+            var diretorioTests = @$"{diretorioProjeto}\{nomeProjeto}.Tests";
 
             Camadas.ConfigurarCamadas(EnumCamadas.API,diretorioAPI);
-            Camadas.ConfigurarCamadas(EnumCamadas.DOMAIN,diretorioDOMAIN);
-            Camadas.ConfigurarCamadas(EnumCamadas.CORE,diretorioCORE);
-            Camadas.ConfigurarCamadas(EnumCamadas.DATA,diretorioDATA);
+            Camadas.ConfigurarCamadas(EnumCamadas.Business,diretorioBusiness);
+            Camadas.ConfigurarCamadas(EnumCamadas.Data,diretorioDATA);
 
             System.Console.WriteLine("\n-------------------Instalação dos pacotes.-------------------\n");
-            InstalarPacotes(versaoDotNet,"API",diretorioAPI);
-            InstalarPacotes(versaoDotNet,"DOMAIN",diretorioDOMAIN);
-            InstalarPacotes(versaoDotNet,"CORE",diretorioCORE);
-            InstalarPacotes(versaoDotNet,"DATA",diretorioDATA);
+            InstalarPacotes(versaoDotNet,"API",diretorioAPI,diretorioProjetoAtual);
+            InstalarPacotes(versaoDotNet,"Bussiness",diretorioBusiness);
+            InstalarPacotes(versaoDotNet,"Data",diretorioDATA);
+            InstalarPacotes(versaoDotNet,"Tests",diretorioTests);
 
             Directory.SetCurrentDirectory(diretorioProjeto);
             Util.ExecutaComandoCMD("code .");
-            // System.Console.WriteLine("Projeto criado com sucesso. \nPressione qualquer tecla para fechar a aplicação.");
-            // Console.ReadKey();
         }
-        private static void InstalarPacotes(string versaoDotNet,string camada,string diretorio)
-        {
+        private static void InstalarPacotes(string versaoDotNet,string camada,string diretorio,string diretorioProjetoAtual = "")
+        {   
+            
             Directory.SetCurrentDirectory(diretorio);
             while (true)
             {
@@ -75,6 +73,11 @@ namespace Auto_Create_Projects_DotNet
                 System.Console.WriteLine("11 - NLog.Web.AspNetCore");
                 System.Console.WriteLine("12 - Dapper");
                 System.Console.WriteLine("13 - Newtonsoft.Json");
+                System.Console.WriteLine("14 - Bogus");
+                System.Console.WriteLine("15 - FluentAssertions");
+                System.Console.WriteLine("16 - XUnit");
+                System.Console.WriteLine("17 - Mock");
+                System.Console.WriteLine("18 - Auto Mock");
                 System.Console.WriteLine("0 - Sair");
                 
                 System.Console.Write("\nInforme o pacote selecionado: ");
@@ -114,12 +117,29 @@ namespace Auto_Create_Projects_DotNet
                         break;
                     case 11: 
                         System.Console.WriteLine(Camadas.InstalarPacotes(versaoDotNet,"NLog.Web.AspNetCore"));
+                        if(!string.IsNullOrEmpty(diretorioProjetoAtual))
+                            Camadas.ConfigurarNLog(diretorioProjetoAtual,Directory.GetCurrentDirectory());
                         break;
                     case 12: 
                         System.Console.WriteLine(Camadas.InstalarPacotes(versaoDotNet,"Dapper"));
                         break;
                     case 13: 
                         System.Console.WriteLine(Camadas.InstalarPacotes(versaoDotNet,"Newtonsoft.Json"));
+                        break;
+                    case 14: 
+                        System.Console.WriteLine(Camadas.InstalarPacotes(versaoDotNet,"Bogus"));
+                        break;
+                    case 15: 
+                        System.Console.WriteLine(Camadas.InstalarPacotes(versaoDotNet,"FluentAssertions"));
+                        break;
+                    case 16: 
+                        System.Console.WriteLine(Camadas.InstalarPacotes(versaoDotNet,"XUnit"));
+                        break;
+                    case 17: 
+                        System.Console.WriteLine(Camadas.InstalarPacotes(versaoDotNet,"moq"));
+                        break;
+                    case 18: 
+                        System.Console.WriteLine(Camadas.InstalarPacotes(versaoDotNet,"Moq.AutoMock"));
                         break;
                     case 0: return;                    
                     default: throw new Exception("Opção inválida.");            
