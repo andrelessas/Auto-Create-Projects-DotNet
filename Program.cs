@@ -46,7 +46,7 @@ namespace Auto_Create_Projects_DotNet
 
             System.Console.WriteLine("\n-------------------Instalação dos pacotes.-------------------\n");
             InstalarPacotes(versaoDotNet,"API",diretorioAPI,diretorioProjetoAtual);
-            InstalarPacotes(versaoDotNet,"Bussiness",diretorioBusiness);
+            InstalarPacotes(versaoDotNet,"Business",diretorioBusiness);
             InstalarPacotes(versaoDotNet,"Data",diretorioDATA);
             InstalarPacotes(versaoDotNet,"Tests",diretorioTests);
 
