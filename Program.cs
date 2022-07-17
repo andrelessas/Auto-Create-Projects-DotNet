@@ -23,7 +23,7 @@ namespace Auto_Create_Projects_DotNet
 
             string diretorioProjetoAtual = Directory.GetCurrentDirectory();
 
-            diretorioProjetoAtual = diretorioProjetoAtual+"\\src"; 
+            // diretorioProjetoAtual = diretorioProjetoAtual+"\\src";  //testes
             
             if(!Directory.Exists(diretorioProjeto))
                 Directory.CreateDirectory(diretorioProjeto);

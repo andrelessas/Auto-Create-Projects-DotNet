@@ -44,7 +44,7 @@ namespace Auto_Create_Projects_DotNet.src
                     System.Console.WriteLine(origem+"\\ArquivosUteis");            
                     System.Console.WriteLine("\nArquivo NLog.config não encontrado.\nDeseja continuar?(s - Sim / n - Não)");
                     if(Console.ReadLine() == "n") 
-                        return;
+                        throw new Exception("Aplicação finalizada.");
                 }
             else
                 origem = origem+"\\ArquivosUteis";
