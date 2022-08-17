@@ -22,8 +22,6 @@ namespace Auto_Create_Projects_DotNet
             string diretorioProjeto = diretorio+"\\"+nomeProjeto;
 
             string diretorioProjetoAtual = Directory.GetCurrentDirectory();
-
-            // diretorioProjetoAtual = diretorioProjetoAtual+"\\src";  //testes
             
             if(!Directory.Exists(diretorioProjeto))
                 Directory.CreateDirectory(diretorioProjeto);
@@ -45,7 +43,7 @@ namespace Auto_Create_Projects_DotNet
             Camadas.ConfigurarCamadas(EnumCamadas.Data,diretorioDATA);
 
             System.Console.WriteLine("\n-------------------Instalação dos pacotes.-------------------\n");
-            InstalarPacotes(versaoDotNet,"API",diretorioAPI,diretorioProjetoAtual);
+            InstalarPacotes(versaoDotNet,"API",diretorioAPI);
             InstalarPacotes(versaoDotNet,"Business",diretorioBusiness);
             InstalarPacotes(versaoDotNet,"Data",diretorioDATA);
             InstalarPacotes(versaoDotNet,"Tests",diretorioTests);
@@ -53,7 +51,7 @@ namespace Auto_Create_Projects_DotNet
             Directory.SetCurrentDirectory(diretorioProjeto);
             Util.ExecutaComandoCMD("code .");
         }
-        private static void InstalarPacotes(string versaoDotNet,string camada,string diretorio,string diretorioProjetoAtual = "")
+        private static void InstalarPacotes(string versaoDotNet,string camada,string diretorio)
         {   
             
             Directory.SetCurrentDirectory(diretorio);
@@ -116,9 +114,7 @@ namespace Auto_Create_Projects_DotNet
                         System.Console.WriteLine(Camadas.InstalarPacotes(versaoDotNet,"NLog"));
                         break;
                     case 11: 
-                        System.Console.WriteLine(Camadas.InstalarPacotes(versaoDotNet,"NLog.Web.AspNetCore"));
-                        if(!string.IsNullOrEmpty(diretorioProjetoAtual))
-                            Camadas.ConfigurarNLog(diretorioProjetoAtual,Directory.GetCurrentDirectory());
+                        System.Console.WriteLine(Camadas.InstalarPacotes(versaoDotNet,"NLog.Web.AspNetCore"));                        
                         break;
                     case 12: 
                         System.Console.WriteLine(Camadas.InstalarPacotes(versaoDotNet,"Dapper"));
@@ -142,7 +138,7 @@ namespace Auto_Create_Projects_DotNet
                         System.Console.WriteLine(Camadas.InstalarPacotes(versaoDotNet,"Moq.AutoMock"));
                         break;
                     case 0: return;                    
-                    default: throw new Exception("Opção inválida.");            
+                    default: throw new Exception(@"Opção inválida.");                                    
                 }
             }
         }
