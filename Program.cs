@@ -76,6 +76,9 @@ namespace Auto_Create_Projects_DotNet
                 System.Console.WriteLine("16 - XUnit");
                 System.Console.WriteLine("17 - Mock");
                 System.Console.WriteLine("18 - Auto Mock");
+                System.Console.WriteLine("19 - Microsoft.NET.Test.Sdk");
+                System.Console.WriteLine("20 - xunit.runner.console");
+                System.Console.WriteLine("21 - xunit.runner.visualstudio");
                 System.Console.WriteLine("0 - Sair");
                 
                 System.Console.Write("\nInforme o pacote selecionado: ");
@@ -136,6 +139,15 @@ namespace Auto_Create_Projects_DotNet
                         break;
                     case 18: 
                         System.Console.WriteLine(Camadas.InstalarPacotes(versaoDotNet,"Moq.AutoMock"));
+                        break;
+                    case 19: 
+                        System.Console.WriteLine(Camadas.InstalarPacotes(versaoDotNet,"Microsoft.NET.Test.Sdk"));
+                        break;
+                    case 20: 
+                        System.Console.WriteLine(Camadas.InstalarPacotes(versaoDotNet,"xunit.runner.console"));
+                        break;
+                    case 21: 
+                        System.Console.WriteLine(Camadas.InstalarPacotes(versaoDotNet,"xunit.runner.visualstudio"));
                         break;
                     case 0: return;                    
                     default: throw new Exception(@"Opção inválida.");                                    
